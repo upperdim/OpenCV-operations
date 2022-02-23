@@ -1,0 +1,6 @@
+.idea
+.vscode
+venv/
+captured_video.mp4
+cropped.jpg
+gray_img.jpg
