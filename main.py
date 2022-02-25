@@ -297,6 +297,79 @@ def obj_replace():
     cv2.destroyAllWindows()
 
 
+def display_diff(orig_img, new_img, new_label):
+    """Utility function to display original and altered version of the image with user specified label"""
+    cv2.imshow('Original', orig_img)
+    cv2.imshow(new_label, new_img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+def morph_erosion():
+    """Result is 1 only if all pixels under kernel is 1"""
+    img = cv2.imread('j.png', cv2.IMREAD_GRAYSCALE)
+    kernel = np.ones((5, 5), np.uint8)
+    erosion = cv2.erode(img, kernel, iterations=1)
+    display_diff(img, erosion, 'Erosion')
+
+
+def morph_dilation():
+    """Result is 1 even if only 1 pixel under kernel is 1"""
+    img = cv2.imread('j.png', cv2.IMREAD_GRAYSCALE)
+    kernel = np.ones((5, 5), np.uint8)
+    dilation = cv2.dilate(img, kernel, iterations=1)
+    display_diff(img, dilation, 'Dilation')
+
+
+def morph_opening():
+    """Opening is actually erosion followed by dilation. Useful for removing noise."""
+    img = cv2.imread('j.png', cv2.IMREAD_GRAYSCALE)
+    kernel = np.ones((5, 5), np.uint8)
+    opening = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
+    display_diff(img, opening, 'Opening')
+
+
+def morph_closing():
+    """Closing is actually dilation followed by erosion. Useful for closing little holes in the objet."""
+    img = cv2.imread('j.png', cv2.IMREAD_GRAYSCALE)
+    kernel = np.ones((5, 5), np.uint8)
+    closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+    display_diff(img, closing, 'Closing')
+
+
+def morph_gradient():
+    """Difference between erosion and dilation of the object. Looks like an outline."""
+    img = cv2.imread('j.png', cv2.IMREAD_GRAYSCALE)
+    kernel = np.ones((5, 5), np.uint8)
+    gradient = cv2.morphologyEx(img, cv2.MORPH_GRADIENT, kernel)
+    display_diff(img, gradient, 'Gradient')
+
+
+def morph_top_hat():
+    """Difference between image and opening of the image."""
+    img = cv2.imread('j.png', cv2.IMREAD_GRAYSCALE)
+    kernel = np.ones((9, 9), np.uint8)
+    tophat = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, kernel)
+    display_diff(img, tophat, 'Top Hat')
+
+
+def morph_black_hat():
+    """Difference between image and closing of the image."""
+    img = cv2.imread('j.png', cv2.IMREAD_GRAYSCALE)
+    kernel = np.ones((9, 9), np.uint8)
+    black_hat = cv2.morphologyEx(img, cv2.MORPH_BLACKHAT, kernel)
+    display_diff(img, black_hat, 'Black Hat')
+
+
+def morph_structuring_elems():
+    rectangular_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+    elliptical_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+    cross_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (5, 5))
+    print(f'Rectangular Kernel:\n{rectangular_kernel}')
+    print(f'Elliptical Kernel:\n{elliptical_kernel}')
+    print(f'Cross Kernel:\n{cross_kernel}')
+
+
 def main():
     # Uncomment the section which you are interested down below:
     #
@@ -312,6 +385,14 @@ def main():
     # contour_shape_detection()
     # color_detection()
     # obj_replace()
+    # morph_erosion()
+    # morph_dilation()
+    # morph_opening()
+    # morph_closing()
+    # morph_gradient()
+    # morph_top_hat()
+    # morph_black_hat()
+    # morph_structuring_elems()
     pass
 
 
