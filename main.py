@@ -330,7 +330,7 @@ def morph_opening():
 
 
 def morph_closing():
-    """Closing is actually dilation followed by erosion. Useful for closing little holes in the objet."""
+    """Closing is actually dilation followed by erosion. Useful for closing little holes in the object."""
     img = cv2.imread('j.png', cv2.IMREAD_GRAYSCALE)
     kernel = np.ones((5, 5), np.uint8)
     closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
